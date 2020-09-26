@@ -19,8 +19,8 @@ const DEFAULT_SCHEMA = {
 };
 
 // TODO: formData 不存在的时候会报错：can't find # of undefined
-function App(
-  {
+function App(props, ref) {
+  const {
     defaultValue,
     templates,
     submit,
@@ -30,9 +30,7 @@ function App(
     commonSettings,
     globalSettings,
     widgets = {},
-  },
-  ref,
-) {
+  } = props;
   let transformFrom = a => a;
   let transformTo = a => a;
   try {
@@ -70,6 +68,12 @@ function App(
     });
   }, [defaultValue]);
 
+  useEffect(() => {
+    if (!props.onSchemaChange) return;
+    const schema = ref.current.getValue();
+    props.onSchemaChange(schema);
+  }, [state.schema]);
+
   const {
     formData,
     frProps,
@@ -86,6 +90,7 @@ function App(
 
   const onChange = data => {
     setState({ formData: data });
+    props.onChange && props.onChange(data);
   };
 
   const onSchemaChange = newSchema => {
