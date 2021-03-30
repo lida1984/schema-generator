@@ -52,7 +52,7 @@ const RenderField = ({
   const onChange = value => {
     const newItem = { ...item };
     newItem.data = value;
-    onItemChange($id, newItem);
+    onItemChange($id, newItem, 'data');
   };
 
   let contentStyle = {};

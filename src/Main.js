@@ -68,12 +68,6 @@ function App(props, ref) {
     });
   }, [defaultValue]);
 
-  useEffect(() => {
-    if (!props.onSchemaChange) return;
-    const schema = ref.current.getValue();
-    props.onSchemaChange(schema);
-  }, [state.schema]);
-
   const {
     formData,
     frProps,
@@ -97,6 +91,10 @@ function App(props, ref) {
     const result = { ...schema };
     result.schema = newSchema;
     setState({ schema: result });
+    if (props.onSchemaChange) {
+      const pureSchema = ref.current.getValue();
+      props.onSchemaChange(pureSchema);
+    }
   };
 
   const _mapping = { ...mapping, array: 'listEditor' };
