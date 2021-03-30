@@ -70,19 +70,20 @@ function Wrapper(
   const flatten = flattenSchema(_schema);
   const flattenWithData = dataToFlatten(flatten, formData);
 
-  const onFlattenChange = newFlatten => {
+  const onFlattenChange = (newFlatten, changeSource = 'schema') => {
     const newSchema = idToSchema(newFlatten);
     const newData = flattenToData(newFlatten);
     // 判断只有schema变化时才调用，一般需求的用户不需要
-    if (onSchemaChange) {
+    if (changeSource === 'schema' && onSchemaChange) {
       onSchemaChange(newSchema);
     }
+    // schema 变化大都会触发 data 变化
     onChange(newData);
   };
 
-  const onItemChange = (key, value) => {
+  const onItemChange = (key, value, changeSource) => {
     flattenWithData[key] = value;
-    onFlattenChange(flattenWithData);
+    onFlattenChange(flattenWithData, changeSource);
   };
 
   const toggleModal = () => setState({ showModal: !local.showModal });
