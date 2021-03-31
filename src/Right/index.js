@@ -31,7 +31,7 @@ export default function Right() {
   const HideRightArrow = () => (
     <div
       className="absolute right-0 top-0 h2 flex-center"
-      style={{ width: 40 }}
+      style={{ width: 40, transform: 'rotate(180deg)' }}
     >
       <ToggleIcon />
     </div>
