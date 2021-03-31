@@ -164,6 +164,18 @@ const A = () => <div>hello</div>;
 }
 ```
 
+### onChange
+
+- type: `function`
+
+表单 data 变化回调，入参为表单的 data
+
+### onSchameChange
+
+- type: `function`
+
+表单 schema 变化回调，入参为导出的 schema
+
 ## 方法
 
 ### getValue
