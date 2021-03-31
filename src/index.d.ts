@@ -1,12 +1,5 @@
 import * as React from 'react';
 
-export interface Template {
-  /** 按钮文案 */
-  text: string;
-  /** 对应的字段 */
-  name: string;
-}
-
 export interface Transformer {
   /** 正向的转换函数 */
   from: (schema: any) => any;
@@ -47,8 +40,6 @@ export interface Setting {
 export interface FRGeneratorProps {
   /** 默认一进入编辑器展示的表单对应的 schema */
   defaultValue?: any;
-  /** 常用的 schema 模板，模板方便用户点击使用 */
-  templates?: Template[];
   /** 自定义 schema 到 form-render 的 schema 的双向转换函数 */
   transformer?: Transformer;
   /** 编辑区顶部的自定义按钮 */
