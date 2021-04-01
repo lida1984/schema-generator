@@ -3,6 +3,7 @@ import { useSet } from './hooks';
 // import SCHEMA from './json/basic.json';
 import FRWrapper from './FRWrapper';
 import { widgets as defaultWidgets } from './widgets/antd';
+import { fromFormRender, toFormRender } from './transformer/form-render';
 import { mapping } from './mapping';
 import './atom.css';
 import './Main.css';
@@ -31,16 +32,17 @@ function App(props, ref) {
     globalSettings,
     widgets = {},
   } = props;
-  let transformFrom = a => a;
-  let transformTo = a => a;
-  try {
+  let transformFrom = fromFormRender;
+  let transformTo = toFormRender;
+
+  if (transformer) {
     if (typeof transformer.from === 'function') {
       transformFrom = transformer.from;
     }
     if (typeof transformer.to === 'function') {
       transformTo = transformer.to;
     }
-  } catch (error) {}
+  }
 
   const [state, setState] = useSet({
     formData: {},
