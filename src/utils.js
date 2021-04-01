@@ -487,7 +487,7 @@ export const dropItem = ({ dragId, dragItem, dropId, position, flatten }) => {
   }
   // TODO: 这块的体验，现在这样兜底了，但是drag起一个元素了，应该让原本变空
   if (dropId.indexOf(dragId) > -1) {
-    return newFlatten;
+    return [newFlatten, dragId];
   }
 
   let newId = dragId;
@@ -694,7 +694,7 @@ function toKey(value) {
   return result == '0' && 1 / value == -INFINITY ? '-0' : result;
 }
 
-const reIsDeepProp = /\/|\[(?:[^[\]]*|(["'])(?:(?!\1)[^\\]|\\.)*?\1)\]/;
+const reIsDeepProp = /#\/.+\//;
 const reIsPlainProp = /^\w*$/;
 
 function isKey(value, object) {
