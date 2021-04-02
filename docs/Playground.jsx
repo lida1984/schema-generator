@@ -21,7 +21,7 @@ const Demo = () => {
   };
 
   return (
-    <div style={{ height: '100vh' }}>
+    <div style={{ height: '80vh' }}>
       <Generator
         ref={ref}
         defaultValue={defaultValue}

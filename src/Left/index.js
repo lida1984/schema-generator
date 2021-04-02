@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { defaultSettings } from '../Settings';
 import { useStore } from '../hooks';
 import './index.css';
 import Element from './Element';
 
-const Left = ({ saveList, setSaveList, ...rest }) => {
+const Left = props => {
   const { userProps = {} } = useStore();
   const { settings } = userProps;
   const _settings = Array.isArray(settings) ? settings : defaultSettings;
@@ -23,7 +23,7 @@ const Left = ({ saveList, setSaveList, ...rest }) => {
                 {Array.isArray(item.widgets) ? (
                   item.widgets.map((widget, idx) => {
                     return (
-                      <Element key={idx.toString()} {...widget} {...rest} />
+                      <Element key={idx.toString()} {...widget} {...props} />
                     );
                   })
                 ) : (

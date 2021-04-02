@@ -3,6 +3,7 @@ import { useSet } from './hooks';
 // import SCHEMA from './json/basic.json';
 import FRWrapper from './FRWrapper';
 import { widgets as defaultWidgets } from './widgets/antd';
+import { fromFormRender, toFormRender } from './transformer/form-render';
 import { mapping } from './mapping';
 import './atom.css';
 import './Main.css';
@@ -19,8 +20,8 @@ const DEFAULT_SCHEMA = {
 };
 
 // TODO: formData 不存在的时候会报错：can't find # of undefined
-function App(
-  {
+function App(props, ref) {
+  const {
     defaultValue,
     templates,
     submit,
@@ -30,19 +31,18 @@ function App(
     commonSettings,
     globalSettings,
     widgets = {},
-  },
-  ref,
-) {
-  let transformFrom = a => a;
-  let transformTo = a => a;
-  try {
+  } = props;
+  let transformFrom = fromFormRender;
+  let transformTo = toFormRender;
+
+  if (transformer) {
     if (typeof transformer.from === 'function') {
       transformFrom = transformer.from;
     }
     if (typeof transformer.to === 'function') {
       transformTo = transformer.to;
     }
-  } catch (error) {}
+  }
 
   const [state, setState] = useSet({
     formData: {},
@@ -86,12 +86,17 @@ function App(
 
   const onChange = data => {
     setState({ formData: data });
+    props.onChange && props.onChange(data);
   };
 
   const onSchemaChange = newSchema => {
     const result = { ...schema };
     result.schema = newSchema;
     setState({ schema: result });
+    if (props.onSchemaChange) {
+      const pureSchema = ref.current.getValue();
+      props.onSchemaChange(pureSchema);
+    }
   };
 
   const _mapping = { ...mapping, array: 'listEditor' };

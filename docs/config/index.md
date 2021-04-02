@@ -14,12 +14,6 @@ toc: menu
 
 默认一进入编辑器展示的表单对应的 schema。格式参考 schema 生成器的输出 schema
 
-### templates
-
-- type: `array`
-
-常用的 schema 模板，模板方便用户点击使用。格式参照上面代码：text 按钮文案，name 对应的字段
-
 ### transformer
 
 - type: `object`
@@ -163,6 +157,18 @@ const A = () => <div>hello</div>;
   "ui:widget": "A"
 }
 ```
+
+### onChange
+
+- type: `function`
+
+表单 data 变化回调，入参为表单的 data
+
+### onSchameChange
+
+- type: `function`
+
+表单 schema 变化回调，入参为导出的 schema
 
 ## 方法
 

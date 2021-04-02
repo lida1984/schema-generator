@@ -17,5 +17,6 @@ export {
   defaultCommonSettings,
   defaultGlobalSettings,
 } from './Settings';
-export { fromFormily, toFormily } from './utils';
+export { fromFormily, toFormily } from './transformer/formily';
+export { fromFormRender, toFormRender } from './transformer/form-render';
 export default forwardRef(Root);
