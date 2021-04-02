@@ -1,4 +1,4 @@
-import { getChildren2 } from '../utils';
+import { getChildren2, isObject } from '../utils';
 
 // formily Schema => FRG schema
 const transformFrom = (mySchema, parent = null) => {
