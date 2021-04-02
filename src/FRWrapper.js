@@ -213,7 +213,7 @@ function Wrapper(
   return (
     <Ctx.Provider value={setGlobal}>
       <StoreCtx.Provider value={store}>
-        <div className="fr-wrapper">
+        <div className="fr-generator-container">
           <Left />
           <div className="mid-layout pr2">
             <div className="mv2 mh1">

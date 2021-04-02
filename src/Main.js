@@ -5,9 +5,9 @@ import FRWrapper from './FRWrapper';
 import { widgets as defaultWidgets } from './widgets/antd';
 import { fromFormRender, toFormRender } from './transformer/form-render';
 import { mapping } from './mapping';
-import './atom.css';
-import './Main.css';
-import 'antd/dist/antd.css';
+import './atom.less';
+import './Main.less';
+import 'antd/dist/antd.less';
 import { oldSchemaToNew } from './utils';
 
 const DEFAULT_SCHEMA = {
