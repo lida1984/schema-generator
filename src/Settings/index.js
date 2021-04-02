@@ -37,6 +37,10 @@ export const defaultCommonSettings = {
     title: '置灰',
     type: 'boolean',
   },
+  required: {
+    title: '必填',
+    type: 'boolean',
+  },
 };
 
 // widget 用于schema中每个元素对应的右侧配置知道用哪个setting

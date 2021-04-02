@@ -1,10 +1,5 @@
-import React, {
-  useRef,
-  useState,
-  forwardRef,
-  useImperativeHandle,
-} from 'react';
-import { useSet, useStorageState } from './hooks';
+import React, { forwardRef, useImperativeHandle } from 'react';
+import { useSet } from './hooks';
 import copyTOClipboard from 'copy-text-to-clipboard';
 import Left from './Left';
 import Right from './Right';
@@ -14,7 +9,6 @@ import {
   combineSchema,
   dataToFlatten,
   flattenToData,
-  getSaveNumber,
   looseJsonParse,
   isObject,
   oldSchemaToNew,
@@ -44,24 +38,17 @@ function Wrapper(
   const [local, setState] = useSet({
     showModal: false,
     showModal2: false,
-    showModal3: false,
     schemaForImport: '',
   });
 
   const { simple = true, preview } = rootState;
 
   const {
-    templates,
-    submit,
     transformFrom,
     transformTo,
     isNewVersion,
     extraButtons = [],
   } = userProps;
-
-  const [saveList, setSaveList] = useState(templates || []);
-
-  const saveNameRef = useRef();
 
   let _schema = {};
   if (schema) {
@@ -70,24 +57,24 @@ function Wrapper(
   const flatten = flattenSchema(_schema);
   const flattenWithData = dataToFlatten(flatten, formData);
 
-  const onFlattenChange = newFlatten => {
+  const onFlattenChange = (newFlatten, changeSource = 'schema') => {
     const newSchema = idToSchema(newFlatten);
     const newData = flattenToData(newFlatten);
     // 判断只有schema变化时才调用，一般需求的用户不需要
-    if (onSchemaChange) {
+    if (changeSource === 'schema' && onSchemaChange) {
       onSchemaChange(newSchema);
     }
+    // schema 变化大都会触发 data 变化
     onChange(newData);
   };
 
-  const onItemChange = (key, value) => {
+  const onItemChange = (key, value, changeSource) => {
     flattenWithData[key] = value;
-    onFlattenChange(flattenWithData);
+    onFlattenChange(flattenWithData, changeSource);
   };
 
   const toggleModal = () => setState({ showModal: !local.showModal });
   const toggleModal2 = () => setState({ showModal2: !local.showModal2 });
-  const toggleModal3 = () => setState({ showModal3: !local.showModal3 });
 
   const clearSchema = () => {
     setGlobal({
@@ -158,10 +145,6 @@ function Wrapper(
     toggleModal();
   };
 
-  // const handleSubmit = () => {
-  //   submit(displaySchema);
-  // };
-
   const getValue = () => {
     return displaySchema;
   };
@@ -201,18 +184,6 @@ function Wrapper(
     copyValue,
   }));
 
-  const saveSchema = () => {
-    try {
-      const text = saveNameRef.current.state.value;
-      const name = 'save' + getSaveNumber();
-      const schema = idToSchema(flattenWithData, '#', true);
-      setSaveList([...saveList, { text, name, schema }]);
-      toggleModal3();
-    } catch (error) {
-      message.error('保存失败');
-    }
-  };
-
   // TODO: flatten是频繁在变的，应该和其他两个函数分开
   const store = {
     flatten: flattenWithData, // schema + formData = flattenWithData
@@ -242,8 +213,8 @@ function Wrapper(
   return (
     <Ctx.Provider value={setGlobal}>
       <StoreCtx.Provider value={store}>
-        <div className="fr-wrapper">
-          <Left saveList={saveList} setSaveList={setSaveList} />
+        <div className="fr-generator-container">
+          <Left />
           <div className="mid-layout pr2">
             <div className="mv2 mh1">
               {_showDefaultBtns[0] !== false && (
@@ -261,9 +232,6 @@ function Wrapper(
                   清空
                 </Button>
               )}
-              {/* <Button className="mr2" onClick={toggleModal3}>
-                  保存
-                </Button> */}
               {_showDefaultBtns[2] !== false && (
                 <Button className="mr2" onClick={toggleModal2}>
                   导入
@@ -281,9 +249,6 @@ function Wrapper(
                   </Button>
                 );
               })}
-              {/* <Button type="primary" className="mr2" onClick={handleSubmit}>
-                  保存
-                </Button> */}
             </div>
             <div className="dnd-container">
               <div style={{ height: preview ? 33 : 0 }}></div>
@@ -321,23 +286,6 @@ function Wrapper(
                 onChange={onTextareaChange}
                 autoSize={{ minRows: 10, maxRows: 30 }}
               />
-            </div>
-          </Modal>
-          <Modal
-            visible={local.showModal3}
-            okText="确定"
-            cancelText="取消"
-            onOk={saveSchema}
-            onCancel={toggleModal3}
-          >
-            <div className="mt4 flex items-center">
-              <div style={{ width: 100 }}>保存名称：</div>
-              <div style={{ width: 280 }}>
-                <Input
-                  defaultValue={'存档' + getSaveNumber()}
-                  ref={saveNameRef}
-                />
-              </div>
             </div>
           </Modal>
         </div>

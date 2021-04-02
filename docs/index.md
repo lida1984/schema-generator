@@ -5,8 +5,6 @@ hero:
   actions:
     - text: 在线Demo
       link: /playground
-    - text: Formily
-      link: /_demos/formily-pg
     - text: 开始使用
       link: /demo
 ---

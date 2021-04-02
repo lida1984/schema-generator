@@ -15,7 +15,6 @@ const RenderField = ({
   const { onItemChange, flatten, widgets, mapping, frProps = {} } = useStore();
   const { labelWidth, displayType, showDescIcon, showValidate } = frProps;
   const { type, title, description, required } = schema;
-  const isRequired = required && required.length > 0;
 
   let widgetName = getWidgetName(schema, mapping);
   const customWidget = schema['ui:widget'];
@@ -52,7 +51,7 @@ const RenderField = ({
   const onChange = value => {
     const newItem = { ...item };
     newItem.data = value;
-    onItemChange($id, newItem);
+    onItemChange($id, newItem, 'data');
   };
 
   let contentStyle = {};
@@ -82,7 +81,7 @@ const RenderField = ({
             }`} // checkbox不带冒号
             title={title}
           >
-            {isRequired && <span className="fr-label-required"> *</span>}
+            {required && <span className="fr-label-required"> *</span>}
             <span
               className={`${isComplex ? 'b' : ''} ${
                 displayType === 'column' ? 'flex-none' : ''
