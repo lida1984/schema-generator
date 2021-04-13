@@ -64,7 +64,17 @@ function App(props, ref) {
     } else {
       setState({ isNewVersion: true });
     }
+    const o = {};
+    ['displayType', 'labelWidth', 'column'].map(str => {
+      if (schema && schema[str]) {
+        o[str] = schema[str];
+      }
+    });
     setState({
+      frProps: {
+        ...state.frProps,
+        ...o,
+      },
       schema: oldSchemaToNew(schema), // 旧的转新的，新的不变
       formData: (schema && schema.formData) || {},
     });
