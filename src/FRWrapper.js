@@ -201,6 +201,7 @@ function Wrapper(
   const _extraBtns = _extraButtons.filter(item => isObject(item) && item.text);
 
   if (simple) {
+    // 全局表单配置 和 组件配置
     return (
       <Ctx.Provider value={setGlobal}>
         <StoreCtx.Provider value={store}>
