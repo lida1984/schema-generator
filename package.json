@@ -34,7 +34,7 @@
     "react-dom": "^16.8.0"
   },
   "dependencies": {
-    "antd": "^4.4.2",
+    "antd": "^4.15.2",
     "clone": "^2.1.2",
     "copy-text-to-clipboard": "^2.2.0",
     "moment": "^2.27.0",
