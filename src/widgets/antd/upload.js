@@ -24,7 +24,11 @@ export default function input(p) {
 
   return (
     <div className="fr-upload-mod">
-      <Upload {...props} className="fr-upload-file">
+      <Upload
+        disabled={p.disabled || p.readonly}
+        {...props}
+        className="fr-upload-file"
+      >
         <Button>
           <UploadOutlined /> 上传
         </Button>

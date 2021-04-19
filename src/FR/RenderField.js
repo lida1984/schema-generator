@@ -14,7 +14,7 @@ const RenderField = ({
   const { schema, data } = item;
   const { onItemChange, flatten, widgets, mapping, frProps = {} } = useStore();
   const { labelWidth, displayType, showDescIcon, showValidate } = frProps;
-  const { type, title, description, required } = schema;
+  const { type, title, description, required, defaultValue, action } = schema;
 
   let widgetName = getWidgetName(schema, mapping);
   const customWidget = schema['ui:widget'];
@@ -67,6 +67,7 @@ const RenderField = ({
     options: schema['ui:options'],
     labelWidth: schema['ui:labelWidth'],
     width: schema['ui:width'],
+    action,
   };
 
   return (
@@ -110,6 +111,7 @@ const RenderField = ({
       <div className={contentClass} style={contentStyle}>
         <Widget
           value={data}
+          defaultValue={defaultValue}
           onChange={onChange}
           schema={schema}
           {...usefulWidgetProps}
