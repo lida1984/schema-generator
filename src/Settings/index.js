@@ -29,7 +29,7 @@ export const defaultCommonSettings = {
       hideNumber: true,
     },
   },
-  default: {
+  defaultValue: {
     title: '默认值',
     type: 'string',
   },
@@ -180,7 +180,7 @@ export const elements = [
       type: 'boolean',
     },
     setting: {
-      default: {
+      defaultValue: {
         title: '是否默认勾选',
         type: 'boolean',
       },
@@ -196,7 +196,7 @@ export const elements = [
       'ui:widget': 'switch',
     },
     setting: {
-      default: {
+      defaultValue: {
         title: '是否默认开启',
         type: 'boolean',
       },
@@ -392,6 +392,22 @@ export const advancedElements = [
       format: 'color',
     },
     setting: {},
+  },
+  {
+    text: '文件上传',
+    name: 'file',
+    widget: 'upload',
+    schema: {
+      title: '文件上传',
+      type: 'string',
+      'ui:widget': 'upload',
+    },
+    setting: {
+      action: {
+        title: '上传地址',
+        type: 'string',
+      },
+    },
   },
 ];
 

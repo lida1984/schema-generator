@@ -1,3 +1,11 @@
+/*
+ * @Description:
+ * @Autor: lida
+ * @Date: 2021-04-08 11:53:00
+ * @LastEditors: lida
+ * @LastEditTime: 2021-04-19 11:32:00
+ * @FilePath: \schema-generator\src\widgets\antd\checkboxes.js
+ */
 import React from 'react';
 import { Checkbox } from 'antd';
 
@@ -8,6 +16,7 @@ export default function checkboxes(p) {
     <Checkbox.Group
       disabled={p.disabled || p.readonly}
       value={_value}
+      defaultValue={p.defaultValue}
       onChange={p.onChange}
     >
       {(enums || [true, false]).map((val, index) => (
